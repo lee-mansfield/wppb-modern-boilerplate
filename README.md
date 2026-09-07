@@ -202,6 +202,18 @@ Each plugin must have its own generated Composer bootstrap class. This boilerpla
 
 A non-empty message saved under **Settings → Modern Plugin** takes precedence in the action hook, shortcode and dynamic block output. Changes apply on the next uncached page render. If the setting is blank, the action and shortcode use their default greeting and each block uses its own message attribute. The block editor's editable message is this per-block fallback; the public output uses the shared setting when populated.
 
+## GitHub Releases
+
+Included in the codebase is the plugin-update-checked code. This allows tagged version from the github repository to trigger the WordPress update availability function. For this to work you must define the following constants in the wp-config.php file:-
+
+`define( 'MAXIMUM_OVERDRIVE_PLUGIN_GIT_URL', '' );`  
+`define( 'MAXIMUM_OVERDRIVE_PLUGIN_SLUG', '' );`  
+`define( 'MAXIMUM_OVERDRIVE_PLUGIN_RELEASE_TOKEN', '' );`
+
+The release token is generated from the github account by going to : Settings > Developer Settings > Personal Access Tokens > Fine-grained Tokens. Click the 'Generate New Token' button and complete the form. N.B. Permissions for the token should just be read-only on code and meta data (Content).
+
+https://github.com/YahnisElsts/plugin-update-checker
+
 ## Changelog
 
 `1.0.0`

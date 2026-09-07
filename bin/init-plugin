@@ -1,0 +1,44 @@
+#!/usr/bin/env php
+<?php
+declare(strict_types=1);
+
+if (PHP_SAPI !== 'cli') { exit(1); }
+$options = getopt('', ['name:', 'slug:', 'namespace:', 'vendor::']);
+$name = trim((string) ($options['name'] ?? ''));
+$slug = trim((string) ($options['slug'] ?? ''));
+$namespace = trim((string) ($options['namespace'] ?? ''));
+$vendor = trim((string) ($options['vendor'] ?? 'your-vendor'));
+
+if ($name === '' || ! preg_match('/^[a-z][a-z0-9-]+$/', $slug) || ! preg_match('/^[A-Z][A-Za-z0-9]*(\\\\[A-Z][A-Za-z0-9]*)+$/', $namespace)) {
+	fwrite(STDERR, "Usage: php bin/init-plugin --name=\"Acme Search\" --slug=acme-search --namespace=\"Acme\\Search\" [--vendor=acme]\n");
+	exit(1);
+}
+
+$package = str_replace(' ', '',ucwords( preg_replace( '/[^A-Za-z0-9]+/', ' ', $name ) ) );
+
+$root = dirname(__DIR__);
+$escapedNamespace = str_replace('\\', '\\\\', $namespace);
+$replacements = [
+	'Modern Plugin Boilerplate' => $name,
+	'Modern Plugin' => $name,
+	// Composer JSON escapes namespace separators, so replace that form separately.
+	'Modern\\\\Plugin' => $escapedNamespace,
+	'Modern\\Plugin' => $namespace,
+	'modern-plugin-boilerplate' => $slug,
+	'modern-plugin' => $slug,
+	'modern_plugin' => str_replace('-', '_', $slug),
+	'MODERN_PLUGIN' => strtoupper(str_replace('-', '_', $slug)),
+	'your-vendor' => $vendor,
+	'ModernPlugin' => $package,
+];
+$iterator = new RecursiveIteratorIterator(new RecursiveDirectoryIterator($root, FilesystemIterator::SKIP_DOTS));
+foreach ($iterator as $file) {
+	if (! $file->isFile() || $file->getPathname() === __FILE__ || str_contains($file->getPathname(), DIRECTORY_SEPARATOR . '.git' . DIRECTORY_SEPARATOR) || in_array($file->getFilename(), ['composer.lock', 'package-lock.json'], true)) { continue; }
+	$content = file_get_contents($file->getPathname());
+	if ($content === false || str_contains($content, "\0")) { continue; }
+	file_put_contents($file->getPathname(), str_replace(array_keys($replacements), array_values($replacements), $content));
+}
+$oldMain = $root . '/plugin-boilerplate.php';
+$newMain = $root . '/' . $slug . '.php';
+if (is_file($oldMain)) { rename($oldMain, $newMain); }
+fwrite(STDOUT, "Initialised {$name}. Next: composer install && npm install && npm run build\n");

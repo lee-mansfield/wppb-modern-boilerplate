@@ -1,0 +1,11 @@
+#!/usr/bin/env bash
+set -euo pipefail
+PLUGIN_SLUG="${1:-modern-plugin}"
+ROOT_DIR="$(cd "$(dirname "$0")/.." && pwd)"
+DIST_DIR="${ROOT_DIR}/dist"
+STAGE_DIR="$(mktemp -d)"
+trap 'rm -rf "${STAGE_DIR}"' EXIT
+mkdir -p "${DIST_DIR}" "${STAGE_DIR}/${PLUGIN_SLUG}"
+rsync -a --exclude-from="${ROOT_DIR}/.distignore" "${ROOT_DIR}/" "${STAGE_DIR}/${PLUGIN_SLUG}/"
+(cd "${STAGE_DIR}" && zip -qr "${DIST_DIR}/${PLUGIN_SLUG}.zip" "${PLUGIN_SLUG}")
+echo "Created dist/${PLUGIN_SLUG}.zip"

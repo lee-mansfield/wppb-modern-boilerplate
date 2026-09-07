@@ -1,0 +1,27 @@
+#!/usr/bin/env php
+<?php
+declare(strict_types=1);
+$name = $argv[1] ?? '';
+if (! preg_match('/^[A-Z][A-Za-z0-9]*$/', $name)) { fwrite(STDERR, "Usage: php bin/make-service ServiceName\n"); exit(1); }
+$filename = 'class-' . strtolower($name) . '.php';
+$target = dirname(__DIR__) . '/src/' . $filename;
+if (file_exists($target)) { fwrite(STDERR, "Already exists: {$target}\n"); exit(1); }
+$template = <<<PHP
+<?php
+
+declare(strict_types=1);
+
+namespace Modern\Plugin;
+
+use Modern\Plugin\Contracts\Service;
+
+final class {$name} implements Service
+{
+	public function register(): void
+	{
+		// Register WordPress hooks here.
+	}
+}
+PHP;
+file_put_contents($target, $template . "\n");
+fwrite(STDOUT, "Created src/{$filename}. Add {$name}::class to Plugin::\$services and run composer dump-autoload.\n");

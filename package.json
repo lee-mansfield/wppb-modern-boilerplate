@@ -1,0 +1,14 @@
+{
+  "name": "modern-plugin-boilerplate",
+  "version": "1.0.0",
+  "private": true,
+  "scripts": {
+    "start": "wp-scripts start",
+    "build": "wp-scripts build",
+    "lint:js": "wp-scripts lint-js blocks assets",
+    "lint:css": "wp-scripts lint-style 'blocks/**/*.scss' 'assets/**/*.scss'",
+    "format": "wp-scripts format blocks assets",
+    "packages-update": "wp-scripts packages-update"
+  },
+  "devDependencies": { "@wordpress/scripts": "^30.0.0", "copy-webpack-plugin": "^12.0.2", "typescript": "5.4.5" }
+}

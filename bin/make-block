@@ -1,0 +1,16 @@
+#!/usr/bin/env php
+<?php
+declare(strict_types=1);
+$slug = $argv[1] ?? '';
+$title = $argv[2] ?? ucwords(str_replace('-', ' ', $slug));
+if (! preg_match('/^[a-z][a-z0-9-]*$/', $slug)) { fwrite(STDERR, "Usage: php bin/make-block block-slug [\"Block Title\"]\n"); exit(1); }
+$dir = dirname(__DIR__) . '/blocks/' . $slug;
+if (is_dir($dir)) { fwrite(STDERR, "Block already exists.\n"); exit(1); }
+mkdir($dir, 0775, true);
+$json = ['$schema' => 'https://schemas.wp.org/trunk/block.json', 'apiVersion' => 3, 'name' => 'modern-plugin/' . $slug, 'version' => '1.0.0', 'title' => $title, 'category' => 'widgets', 'icon' => 'block-default', 'textdomain' => 'modern-plugin', 'supports' => ['html' => false], 'editorScript' => 'file:./index.js', 'style' => 'file:./style-index.css', 'editorStyle' => 'file:./index.css', 'render' => 'file:./render.php'];
+file_put_contents($dir . '/block.json', json_encode($json, JSON_PRETTY_PRINT | JSON_UNESCAPED_SLASHES) . "\n");
+file_put_contents($dir . '/index.js', "import { registerBlockType } from '@wordpress/blocks';\nimport { useBlockProps } from '@wordpress/block-editor';\nimport metadata from './block.json';\nimport './editor.scss';\nimport './style.scss';\nregisterBlockType(metadata.name, { edit: () => <div {...useBlockProps()}>" . addslashes($title) . "</div>, save: () => null });\n");
+file_put_contents($dir . '/render.php', "<?php\ndefined('ABSPATH') || exit;\n?>\n<div <?php echo get_block_wrapper_attributes(); ?>>" . htmlspecialchars($title, ENT_QUOTES) . "</div>\n");
+file_put_contents($dir . '/editor.scss', ".wp-block-modern-plugin-{$slug} { outline: 1px dashed #9ca3af; }\n");
+file_put_contents($dir . '/style.scss', ".wp-block-modern-plugin-{$slug} { padding: 1rem; }\n");
+fwrite(STDOUT, "Created blocks/{$slug}. Add its entry to webpack.config.js.\n");

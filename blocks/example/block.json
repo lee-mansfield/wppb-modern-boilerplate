@@ -1,0 +1,23 @@
+{
+	"$schema": "https://schemas.wp.org/trunk/block.json",
+	"apiVersion": 3,
+	"name": "modern-plugin/example",
+	"version": "1.0.0",
+	"title": "Modern Plugin Example",
+	"category": "widgets",
+	"icon": "star-filled",
+	"description": "A dynamic example block ready to duplicate.",
+	"textdomain": "modern-plugin",
+	"attributes": {
+		"message": { "type": "string", "default": "Hello from Modern Plugin." }
+	},
+	"supports": {
+		"html": false,
+		"align": [ "wide", "full" ],
+		"spacing": { "padding": true, "margin": true }
+	},
+	"editorScript": "file:./index.js",
+	"style": "file:./style-index.css",
+	"editorStyle": "file:./index.css",
+	"render": "file:./render.php"
+}

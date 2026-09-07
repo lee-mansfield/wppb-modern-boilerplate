@@ -1,0 +1,11 @@
+parameters:
+  level: 8
+  paths:
+    - plugin-boilerplate.php
+    - src
+    - blocks
+    - templates
+  excludePaths:
+    - build
+  bootstrapFiles:
+    - vendor/php-stubs/wordpress-stubs/wordpress-stubs.php

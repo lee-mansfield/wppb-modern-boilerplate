@@ -1,5 +1,14 @@
 # Modern WordPress Plugin Boilerplate
 
+Plugin Name:    `plugin name goes here`  
+Plugin URI: 	`Plugin URI goes here`  
+Description:    `Description goes here`  
+Version:        1.0.0  
+Author:         `Author goes here`  
+Author URI: 	`Author URI goes here` 
+
+## Description
+
 A reusable, production-minded foundation for modern WordPress plugins. It keeps hooks explicit, uses small namespaced services, supports dynamic Gutenberg blocks, and includes the tooling needed to ship confidently.
 
 ## Requirements
@@ -192,3 +201,8 @@ Each plugin must have its own generated Composer bootstrap class. This boilerpla
 ## Shared settings message
 
 A non-empty message saved under **Settings → Modern Plugin** takes precedence in the action hook, shortcode and dynamic block output. Changes apply on the next uncached page render. If the setting is blank, the action and shortcode use their default greeting and each block uses its own message attribute. The block editor's editable message is this per-block fallback; the public output uses the shared setting when populated.
+
+## Changelog
+
+`1.0.0`
+* 7th Sept 2026 - Initial release.

@@ -206,9 +206,9 @@ A non-empty message saved under **Settings → Modern Plugin** takes precedence 
 
 Included in the codebase is the plugin-update-checked code. This allows tagged version from the github repository to trigger the WordPress update availability function. For this to work you must define the following constants in the wp-config.php file:-
 
-`define( 'MAXIMUM_OVERDRIVE_PLUGIN_GIT_URL', '' );`  
-`define( 'MAXIMUM_OVERDRIVE_PLUGIN_SLUG', '' );`  
-`define( 'MAXIMUM_OVERDRIVE_PLUGIN_RELEASE_TOKEN', '' );`
+`define( 'WPPB_CI_CD_PLUGIN_GIT_URL', '' );`  
+`define( 'WPPB_CI_CD_PLUGIN_SLUG', '' );`  
+`define( 'WPPB_CI_CD_PLUGIN_GIT_RELEASE_TOKEN', '' );`
 
 The release token is generated from the github account by going to : Settings > Developer Settings > Personal Access Tokens > Fine-grained Tokens. Click the 'Generate New Token' button and complete the form. N.B. Permissions for the token should just be read-only on code and meta data (Content).
 

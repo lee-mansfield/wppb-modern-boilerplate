@@ -24,7 +24,7 @@ final class Blocks implements Service {
 	 * @return void
 	 */
 	public function register(): void {
-		add_action( 'init', array( $this, 'registerBlocks' ) );
+		add_action( 'init', array( $this, 'register_blocks' ) );
 	}
 
 	/**
@@ -32,7 +32,7 @@ final class Blocks implements Service {
 	 *
 	 * @return void
 	 */
-	public function registerBlocks(): void {
+	public function register_blocks(): void {
 		$blocks_path = PATH . 'build/blocks';
 		if ( ! is_dir( $blocks_path ) ) {
 			return;

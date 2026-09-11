@@ -14,7 +14,7 @@ use Modern\Plugin\Contracts\Service;
 /**
  * Registers the example topic taxonomy.
  */
-final class ExampleTaxonomy implements Service {
+final class Example_Taxonomy implements Service {
 
 	public const TAXONOMY = 'modern_topic';
 
@@ -24,7 +24,7 @@ final class ExampleTaxonomy implements Service {
 	 * @return void
 	 */
 	public function register(): void {
-		add_action( 'init', array( $this, 'registerTaxonomy' ) );
+		add_action( 'init', array( $this, 'register_taxonomy' ) );
 	}
 
 	/**
@@ -32,10 +32,10 @@ final class ExampleTaxonomy implements Service {
 	 *
 	 * @return void
 	 */
-	public function registerTaxonomy(): void {
+	public function register_taxonomy(): void {
 		register_taxonomy(
 			self::TAXONOMY,
-			array( ExamplePostType::POST_TYPE ),
+			array( Example_Post_Type::POST_TYPE ),
 			array(
 				'labels'       => array(
 					'name'          => __( 'Topics', 'modern-plugin' ),

@@ -1,0 +1,24 @@
+@use "../abstracts" as utilities;
+
+.my-plugin-admin {
+
+	fieldset,
+	legend {
+		margin-block: var(--wppb-mb--preset--spacing--40, 1rem);
+		text-box-trim: trim-start;
+	}
+
+	legend {
+		width: 100%;
+		font-weight: 600;
+		padding-bottom: 0.25rem;
+		border-bottom: 1px dashed #000;
+		box-sizing: border-box;
+	}
+	
+	input[type="text"],
+	select,
+	.components-input-control__container {
+		border-radius: utilities.$border-radius;
+	}
+}

@@ -22,7 +22,7 @@ final class Assets implements Service {
 	 * @return void
 	 */
 	public function register(): void {
-		add_action( 'wp_enqueue_scripts', array( $this, 'enqueueFrontend' ) );
+		add_action( 'wp_enqueue_scripts', array( $this, 'enqueue_frontend' ) );
 	}
 
 	/**
@@ -30,7 +30,7 @@ final class Assets implements Service {
 	 *
 	 * @return void
 	 */
-	public function enqueueFrontend(): void {
+	public function enqueue_frontend(): void {
 		$asset_file = PATH . 'build/frontend.asset.php';
 		$asset      = file_exists( $asset_file ) ? require $asset_file : array(
 			'dependencies' => array(),

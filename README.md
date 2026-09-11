@@ -58,18 +58,19 @@ bin/                 initializer, generators and packager
 
 ## Included examples
 
-- `ExamplePostType`: REST-enabled custom post type.
-- `ExampleTaxonomy`: REST-enabled hierarchical taxonomy.
-- `ExampleRoute`: public `GET /wp-json/modern-plugin/v1/status` route.
-- `SettingsPage`: Settings API page with capability checks, sanitisation and an admin PHP template.
-- `ExampleDisplay`: front-end action hook and shortcode sharing one PHP template.
+- `Example_Post_Type`: REST-enabled custom post type.
+- `Example_Taxonomy`: REST-enabled hierarchical taxonomy.
+- `Example_Route`: public `GET /wp-json/modern-plugin/v1/status` route.
+- `Settings_Page`: Settings API page with capability checks, sanitisation and an admin PHP template.
+- `React_Settings_Page`: Same as settings API page above but redered UI using WordPress React package.
+- `Example_Display`: front-end action hook and shortcode sharing one PHP template.
 - `blocks/example`: dynamic API v3 block using `block.json`, React and Sass, rendering the same front-end partial.
 
 Rename and adapt them, or delete their files and remove them from `Plugin::$services`. If removing the CPT/taxonomy, also remove their activation calls.
 
 ## PHP templates: action hooks, shortcodes and blocks
 
-The `ExampleDisplay` service is already registered in `Plugin::$services`. All three front-end approaches load `templates/frontend/example.php`; edit that file for the shared HTML. The action and shortcode prepare their message in `src/Frontend/class-exampledisplay.php`; the block prepares it from its attributes in `blocks/example/render.php`. The partial uses `wp_kses_post()` to preserve safe RichText formatting while filtering disallowed HTML.
+The `Example_Display` service is already registered in `Plugin::$services`. All three front-end approaches load `templates/frontend/example.php`; edit that file for the shared HTML. The action and shortcode prepare their message in `src/Frontend/class-example-display.php`; the block prepares it from its attributes in `blocks/example/render.php`. The partial uses `wp_kses_post()` to preserve safe RichText formatting while filtering disallowed HTML.
 
 ### Front end: action hook
 
@@ -91,7 +92,7 @@ Add a **Shortcode block** to a WordPress page or block template and enter:
 [modern_plugin_example]
 ```
 
-Publish the page to display the example at the shortcode's position. `renderShortcode()` buffers the same `render()` callback and returns its HTML, as required for shortcodes. The action callback outputs HTML directly. Use either placement method; using both will display the example twice.
+Publish the page to display the example at the shortcode's position. `render_shortcode()` buffers the same `render()` callback and returns its HTML, as required for shortcodes. The action callback outputs HTML directly. Use either placement method; using both will display the example twice.
 
 ### Front end: dynamic block
 
@@ -103,13 +104,13 @@ Changes to the shared partial take effect without a build. After changing block 
 
 ### Back end: admin template
 
-Open **Settings → Modern Plugin**. The existing `SettingsPage` service registers this screen through `admin_menu` and `add_options_page()`. WordPress calls its `render()` method when the screen is opened. After checking `manage_options`, it includes `templates/admin/settings.php`.
+Open **Settings → Modern Plugin**. The existing `Settings_Page` service registers this screen through `admin_menu` and `add_options_page()` and also `admin_menu_page()`. WordPress calls its `render()` method when the screen is opened. After checking `manage_options`, it includes `templates/admin/settings.php` and `templates/admin/react-settings.php`.
 
-The partial contains the settings form; `settings_fields()` retains the Settings API nonce and option-group fields, while registration and sanitisation remain in the service. Adapt the admin HTML in the partial and the behaviour in `src/Settings/class-settingspage.php`.
+The partial contains the settings form; `settings_fields()` retains the Settings API nonce and option-group fields, while registration and sanitisation remain in the service. Adapt the admin HTML in the partial and the behaviour in `src/Admin/class-settings-page.php`.
 
 ### Rename or remove the examples
 
-`bin/init-plugin` renames the hook, shortcode, namespace and text domain along with the rest of the boilerplate. To remove the front-end example, remove `ExampleDisplay` from `Plugin::$services`, its import and its class. Keep the shared partial while the example block still uses it; delete it only after removing all consumers. Remove any corresponding shortcode or theme hook placements as well. Keep `templates/` in release packages: these PHP files are loaded at runtime.
+`bin/init-plugin` renames the hook, shortcode, namespace and text domain along with the rest of the boilerplate. To remove the front-end example, remove `Example_Display` from `Plugin::$services`, its import and its class. Keep the shared partial while the example block still uses it; delete it only after removing all consumers. Remove any corresponding shortcode or theme hook placements as well. Keep `templates/` in release packages: these PHP files are loaded at runtime.
 
 ## Generate components
 
@@ -185,7 +186,7 @@ The ZIP appears in `dist/`. The default `.distignore` excludes source, tests and
 ## Design choices
 
 - Explicit services instead of a container: less magic and easier debugging.
-- Composer classmap loading supports WordPress class filenames (for example, `class-exampleposttype.php`) without manual includes.
+- Composer classmap loading supports WordPress class filenames (for example, `class-example-post-type.php`) without manual includes.
 - `block.json` as the block source of truth.
 - No database abstraction or framework until complexity proves a need.
 - No automatic deletion: data loss must be a conscious decision.

@@ -16,7 +16,7 @@ use WP_REST_Response;
 /**
  * Registers and serves the example status endpoint.
  */
-final class ExampleRoute implements Service {
+final class Example_Route implements Service {
 
 	/**
 	 * Register REST API hooks.
@@ -24,7 +24,7 @@ final class ExampleRoute implements Service {
 	 * @return void
 	 */
 	public function register(): void {
-		add_action( 'rest_api_init', array( $this, 'registerRoutes' ) );
+		add_action( 'rest_api_init', array( $this, 'register_routes' ) );
 	}
 
 	/**
@@ -32,7 +32,7 @@ final class ExampleRoute implements Service {
 	 *
 	 * @return void
 	 */
-	public function registerRoutes(): void {
+	public function register_routes(): void {
 		register_rest_route(
 			'modern-plugin/v1',
 			'/status',

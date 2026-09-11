@@ -8,7 +8,7 @@
 
 defined( 'ABSPATH' ) || exit;
 
-$message = \Modern\Plugin\Settings\SettingsPage::getMessage(
+$message = \Modern\Plugin\Admin\Settings::get_message(
 	$attributes['message'] ?? __( 'Hello from Modern Plugin.', 'modern-plugin' )
 );
 ?>

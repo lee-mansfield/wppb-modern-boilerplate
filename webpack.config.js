@@ -6,6 +6,7 @@ module.exports = {
 	...defaultConfig,
 	entry: {
 		frontend: path.resolve(process.cwd(), 'assets/js/frontend.js'),
+        'admin/index': path.resolve(process.cwd(), 'assets/js/admin/index.js'),
 		'blocks/example/index': path.resolve(process.cwd(), 'blocks/example/index.js'),
 	},
 	plugins: [

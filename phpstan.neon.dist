@@ -5,6 +5,8 @@ parameters:
     - src
     - blocks
     - templates
+  scanDirectories:
+    - plugin-update-checker/Puc
   excludePaths:
     - build
   bootstrapFiles:

@@ -1,0 +1,14 @@
+@use "../abstracts" as utilities;
+
+.my-plugin-admin {
+
+	input[type="submit"],
+	button {
+		border-radius: utilities.$border-radius;
+
+		&.align-right {
+			margin-left: auto;
+    		display: block;
+		}
+	}
+}

@@ -10,12 +10,12 @@ declare(strict_types=1);
 namespace Modern\Plugin\Frontend;
 
 use Modern\Plugin\Contracts\Service;
-use Modern\Plugin\Settings\SettingsPage;
+use Modern\Plugin\Admin\Settings;
 
 /**
  * Displays the same PHP partial through an action or a shortcode.
  */
-final class ExampleDisplay implements Service {
+final class Example_Display implements Service {
 
 	/**
 	 * Register the display callback and shortcode.
@@ -24,7 +24,7 @@ final class ExampleDisplay implements Service {
 	 */
 	public function register(): void {
 		add_action( 'modern_plugin_example', array( $this, 'render' ) );
-		add_shortcode( 'modern_plugin_example', array( $this, 'renderShortcode' ) );
+		add_shortcode( 'modern_plugin_example', array( $this, 'render_shortcode' ) );
 	}
 
 	/**
@@ -33,7 +33,7 @@ final class ExampleDisplay implements Service {
 	 * @return void
 	 */
 	public function render(): void {
-		$message = SettingsPage::getMessage( __( 'Hello from the plugin front-end template!', 'modern-plugin' ) );
+		$message = Settings::get_message( __( 'Hello from the plugin front-end template!', 'modern-plugin' ) );
 
 		require \Modern\Plugin\PATH . 'templates/frontend/example.php';
 	}
@@ -43,7 +43,7 @@ final class ExampleDisplay implements Service {
 	 *
 	 * @return string Rendered HTML.
 	 */
-	public function renderShortcode(): string {
+	public function render_shortcode(): string {
 		ob_start();
 
 		try {

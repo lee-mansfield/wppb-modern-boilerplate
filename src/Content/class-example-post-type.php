@@ -14,7 +14,7 @@ use Modern\Plugin\Contracts\Service;
 /**
  * Registers the example item post type.
  */
-final class ExamplePostType implements Service {
+final class Example_Post_Type implements Service {
 
 	public const POST_TYPE = 'modern_item';
 
@@ -24,7 +24,7 @@ final class ExamplePostType implements Service {
 	 * @return void
 	 */
 	public function register(): void {
-		add_action( 'init', array( $this, 'registerPostType' ) );
+		add_action( 'init', array( $this, 'register_post_type' ) );
 	}
 
 	/**
@@ -32,7 +32,7 @@ final class ExamplePostType implements Service {
 	 *
 	 * @return void
 	 */
-	public function registerPostType(): void {
+	public function register_post_type(): void {
 		register_post_type(
 			self::POST_TYPE,
 			array(

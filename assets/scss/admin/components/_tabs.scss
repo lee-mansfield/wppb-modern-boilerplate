@@ -1,0 +1,41 @@
+@use "../abstracts" as utilities;
+
+.my-plugin-admin {
+
+	.components-button {
+		
+		&.components-tab-panel__tabs-item {
+			border: 1px solid #999;
+			border-right: 0;
+			border-bottom-left-radius: 0;
+    		border-bottom-right-radius: 0;
+			border-top-left-radius: utilities.$border-radius;
+			border-top-right-radius: utilities.$border-radius;
+			position: relative;
+			bottom: -1px;
+			background-color: #e7e7e7;
+			height: 2rem !important;
+
+			&:last-child {
+				border-right: 1px solid #999;
+			}
+
+			&.is-active {
+				z-index: 1;
+				background-color: white;
+
+				&::after {
+					content: "";
+					display: block;
+					position: absolute;
+					left: 0;
+					right: 0;
+					bottom: -1px;
+					height: 1px;
+					background-color: white;
+					box-shadow: none;
+				}
+			}
+		}
+	}
+}
